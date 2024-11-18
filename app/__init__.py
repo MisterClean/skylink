@@ -1,10 +1,13 @@
+import logging
 from flask import Flask
 
 def create_app():
-    """Initialize the Flask application."""
     app = Flask(__name__)
 
-    # Register blueprints
+    # Enable error logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    # Register routes
     from .routes import main
     app.register_blueprint(main)
 

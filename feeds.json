@@ -1,0 +1,9 @@
+{
+    "hello_world_test": {
+        "starter_packs": [
+            "https://bsky.app/starter-pack/did:plc:a2cay4ywrgywr4lca6lxq6v3/3lapscxd4xv2k",
+            "https://bsky.app/starter-pack/did:plc:a2cay4ywrgywr4lca6lxq6v3/3lajyiu6es52p"
+        ],
+        "users": []
+    }
+}

@@ -11,6 +11,18 @@
     <div class="container py-5">
         <h1 class="text-center mb-4">SkyLink Feed Manager</h1>
         
+        
+        <!-- Login Status Messages -->
+        {% if login_status.success %}
+            <div class="alert alert-success" role="alert">
+                {{ login_status.message }}
+            </div>
+        {% elif login_status.message %}
+            <div class="alert alert-danger" role="alert">
+                {{ login_status.message }}
+            </div>
+        {% endif %}
+
         <!-- Login Section -->
         <div class="card mb-4">
             <div class="card-body">
@@ -42,6 +54,10 @@
                         <label for="starter_packs" class="form-label">Starter Pack URIs (comma-separated):</label>
                         <input type="text" id="starter_packs" name="starter_packs" class="form-control" required>
                     </div>
+                        <div class="mb-3">
+        <label for="starter_pack_uri" class="form-label">Starter Pack URI:</label>
+        <input type="text" id="starter_pack_uri" name="starter_pack_uri" class="form-control" required>
+    </div>
                     <button type="submit" class="btn btn-success">Create Feed</button>
                 </form>
             </div>

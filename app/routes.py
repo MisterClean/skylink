@@ -11,7 +11,9 @@ feed_manager = BlueskyFeedManager()
 def home():
     """Render the home page."""
     feeds = feed_manager.list_feeds()
-    return render_template("home.html", feeds=feeds)
+    # Ensure `login_status` is always available
+    login_status = feed_manager.login_status if hasattr(feed_manager, 'login_status') else {"success": False, "message": ""}
+    return render_template("home.html", feeds=feeds, login_status=login_status)
 
 @main.route("/login", methods=["POST"])
 def login():
@@ -20,15 +22,19 @@ def login():
     app_password = request.form["app_password"]
     if feed_manager.login(username, app_password):
         return redirect(url_for("main.home"))
-    return "Login failed. Please try again."
+    return redirect(url_for("main.home"))
 
 @main.route("/create_feed", methods=["POST"])
 def create_feed():
-    """Handle creating a new feed."""
+    """Create a new feed from starter packs."""
     feed_name = request.form["feed_name"]
-    starter_packs = request.form["starter_packs"].split(",")
-    feed_manager.create_feed(feed_name, starter_packs)
-    return redirect(url_for("main.home"))
+    starter_pack_uri = request.form["starter_pack_uri"]  # A single starter pack URI is expected
+
+    success = feed_manager.process_starter_pack(feed_name, starter_pack_uri)
+    if success:
+        return f"Feed '{feed_name}' created successfully!", 200
+    else:
+        return f"Failed to create feed '{feed_name}'.", 500
 
 @main.route("/save_feeds")
 def save_feeds():
