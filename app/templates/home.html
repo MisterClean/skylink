@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyLink Feed Manager</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">SkyLink Feed Manager</h1>
+        
+        <!-- Login Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Login</h2>
+                <form action="/login" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="app_password" class="form-label">App Password:</label>
+                        <input type="password" id="app_password" name="app_password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Create Feed Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Create a Feed</h2>
+                <form action="/create_feed" method="POST">
+                    <div class="mb-3">
+                        <label for="feed_name" class="form-label">Feed Name:</label>
+                        <input type="text" id="feed_name" name="feed_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="starter_packs" class="form-label">Starter Pack URIs (comma-separated):</label>
+                        <input type="text" id="starter_packs" name="starter_packs" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Feed</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Feeds Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Feeds</h2>
+                <ul class="list-group">
+                    {% for feed_name, details in feeds.items() %}
+                    <li class="list-group-item">
+                        <strong>{{ feed_name }}</strong>: 
+                        {{ details.starter_packs | join(", ") }} ({{ details.users | length }} users)
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Manage Feeds Section -->
+        <div class="text-center">
+            <a href="/save_feeds" class="btn btn-secondary me-2">Save Feeds</a>
+            <a href="/load_feeds" class="btn btn-secondary">Load Feeds</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
